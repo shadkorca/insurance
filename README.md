@@ -21,4 +21,5 @@ cd frontend
 npm install
 
 npm run dev
+
 python manage.py runserver

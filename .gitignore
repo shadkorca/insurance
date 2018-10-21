@@ -3,5 +3,6 @@
 *.egg-info
 *.mo
 *.egg
-.idea/
+.idea/*
 *.xml
+migrations/*

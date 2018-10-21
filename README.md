@@ -10,7 +10,9 @@ pip install django-cors-heders
 Node.js
 
 npm install pug --save-dev
+
 npm install axios vue-axios --save
+
 npm install vuex --save
 
 Далее для запуска, нужно зайти во фронтенд

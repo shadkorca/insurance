@@ -1,12 +1,13 @@
 # coding=utf-8
 
 from rest_framework import serializers
-from .models import RiskTypeModel
+# from .models import RiskTypeModel
+from .models import RiskTypeList, FieldTypes, Fields, PolicyList
 
 
-class RiskSerializer(serializers.ModelSerializer):
+class FieldTypesSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = RiskTypeModel
+        model = RiskTypeList
         fields = '__all__'
 

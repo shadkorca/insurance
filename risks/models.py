@@ -34,7 +34,7 @@ class RiskTypeList(models.Model):
 class Fields(models.Model):
     # названия полей и к какому риску относиться
     field_name = models.CharField(max_length=60)
-    risk_type_id = models.ForeignKey(RiskTypeList, on_delete=models.CASCADE)
+    risk_type_id = models.ForeignKey(RiskTypeList, related_name='fields', on_delete=models.CASCADE)
     field_type_id = models.ForeignKey(FieldTypes, on_delete=models.CASCADE)
     enumerate = models.BooleanField()
     enum_text = models.CharField(max_length=60)
@@ -51,7 +51,7 @@ class EnumerateVariants(models.Model):
 class PolicyList(models.Model):
     name = models.CharField(max_length=60)
     risk_type_id = models.ForeignKey(RiskTypeList, on_delete=models.CASCADE)
-    date = models.DateField()
+    date = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.name

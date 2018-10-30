@@ -38,7 +38,7 @@ const actions = {
     })
   },
   deleteRisk ({ commit }, risk) {
-    Note.delete(risk).then(response => {
+    Note.delete(risk).then(risk => {
       commit(REMOVE_RISK, risk)
     })
   },

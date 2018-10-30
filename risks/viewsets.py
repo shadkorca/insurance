@@ -1,26 +1,45 @@
 # coding=utf-8
 
-from rest_framework import viewsets
-# from .serializers import RiskSerializer
-from .serializers import FieldTypesSerializer
-# from .models import RiskTypeModel
+from rest_framework import viewsets, generics
+from .serializers import RiskTypesSerializer, PolicyListSerializer, FieldsSerializer
 from .models import RiskTypeList, FieldTypes, Fields, PolicyList
+from rest_framework.response import Response
 
 
-# class RiskViewSet(viewsets.ModelViewSet):
-#     queryset = RiskTypeModel.objects.all().order_by('-created_at')
-#     serializer_class = RiskSerializer
-
+# class RiskViewSet(viewsets.ViewSet):
 class RiskViewSet(viewsets.ModelViewSet):
     types_list = ['Number', 'Text', 'Checkbox', 'Date']
     # for type in types_list:
-        # FieldTypes.objects.get_or_create(type_name=type)
     a = FieldTypes.objects.filter(type_name__in=types_list)
     if not a:
         for type in types_list:
             FieldTypes.objects.create(type_name=type)
-    # a = FieldTypes.objects.all().values_list('type_name')
-
-    # queryset = Fields.objects.all()
     queryset = RiskTypeList.objects.all()
-    serializer_class = FieldTypesSerializer
+    serializer_class = RiskTypesSerializer
+
+    def list(self, request):
+        queryset = RiskTypeList.objects.all()
+        serializer = RiskTypesSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = Fields.objects.filter(risk_type_id=pk)
+        serializer = FieldsSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    # def update(self, request, pk=None):
+    #     queryset = Fields.objects.filter(risk_type_id=pk)
+    #     serializer = FieldsSerializer(queryset, many=True)
+    #     return Response(serializer.data)
+
+    # def destroy(self, request, pk=None):
+    #     queryset = Fields.objects.filter(risk_type_id=pk)
+    #     serializer = FieldsSerializer(queryset, many=True)
+    #     print('pk %s' % pk)
+    #     print('request %s' % format(request))
+    #     return Response(serializer.data)
+
+
+class PolicyViewSets(viewsets.ModelViewSet):
+    queryset = PolicyList.objects.all()
+    serializer_class = PolicyListSerializer

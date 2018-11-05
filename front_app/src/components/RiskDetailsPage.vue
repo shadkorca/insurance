@@ -3,10 +3,10 @@
     <v-content>
       <v-layout>
         <v-flex column>
-          <RiskTypes/>
+          <RiskFields/>
         </v-flex>
         <v-flex column>
-          <AddRiskType/>
+          <AddField/>
         </v-flex>
       </v-layout>
     </v-content>
@@ -14,14 +14,14 @@
 </template>
 
 <script>
-import RiskTypes from '@/components/RiskTypes'
-import AddRiskType from '@/components/AddRiskType'
+import RiskFields from '@/components/RiskFields'
+import AddField from '@/components/AddField'
 
 export default {
-  name: 'risks',
+  name: 'risks_dateils',
   components: {
-    RiskTypes,
-    AddRiskType
+    RiskFields,
+    AddField
   },
   data () {
     return {

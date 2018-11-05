@@ -2,8 +2,12 @@
   <v-app>
     <v-content>
       <v-layout>
-        <PolicyList/>
-        <AddPolicy/>
+        <v-flex column>
+          <PolicyList/>
+        </v-flex>
+        <v-flex column>
+          <AddPolicy/>
+        </v-flex>
       </v-layout>
     </v-content>
   </v-app>

@@ -5,16 +5,16 @@
         <h2 class="headline font-weight-bold">Policies List</h2>
         <v-flex class="xs8 offset-xs2">
           <v-card class="my-4"
-                  v-for="(eco, i) in ecosystem"
-                  :key="i">
+                  v-for="(pol, i) in policies"
+                  :key="pol.id">
               <v-layout row wrap>
                 <v-flex>
                   <v-card>
                     <v-card-actions class="justify-center xs12">
-                      <v-btn flat class="justify" @click="submitForm(eco.id)" style="width:70%;">{{ eco.name }}</v-btn>
+                      <v-btn flat class="justify" @click="submitForm(pol.id)" style="width:70%;">{{ pol.name }}</v-btn>
                       <v-spacer></v-spacer>
                       <v-btn fab dark small color="primary" style="width: 30px; height: 30px;"
-                      @click="deletePolicy(eco.id)">
+                      @click="deletePolicy(pol)">
                           <v-icon flat dark>remove</v-icon>
                       </v-btn>
                     </v-card-actions>
@@ -29,29 +29,39 @@
 </template>
 
 <script>
+  import { Policy } from "../api/policies";
   export default {
-      data: () => ({
-      ecosystem: [
-        {
-            "id": 1,
-            "name": "Cars"
-        },
-        {
-            "id": 2,
-            "name": "House"
-        }
-      ]
+    data: () => ({
+      policies: null
     }),
-  methods: {
-    submitForm (data) {
-
-      console.log(data)
-
+    // watch: {
+    //       getPolicies() {
+    //           Policy.listPolicies().then(data => {
+    //               this.policies = data
+    //               console.log('watch data')
+    //               console.log(data)
+    //           })
+    //           console.log(this.policies)
+    //       }
+    //   },
+    mounted: function () {
+      console.log('mounted')
+      this.policies = Policy.listPolicies()
+        Policy.listPolicies().then(data => {
+            this.policies = data
+            console.log(data)
+        })
+      console.log(this.policies)
     },
-    deletePolicy(type) {
-      console.log(type)
+    methods: {
+      submitForm (data) {
+        console.log(data)
+      },
+      deletePolicy(pol) {
+          Policy.deletePolicy(pol)
+          console.log(pol.id)
+      }
     }
-  }
   }
 </script>
 

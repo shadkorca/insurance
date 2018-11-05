@@ -51,7 +51,8 @@ class EnumerateVariants(models.Model):
 class PolicyList(models.Model):
     name = models.CharField(max_length=60)
     risk_type_id = models.ForeignKey(RiskTypeList, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField()
+    # date = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.name

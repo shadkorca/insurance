@@ -5,16 +5,16 @@
         <h2 class="headline font-weight-bold">Risk Types</h2>
         <v-flex class="xs8 offset-xs2">
           <v-card class="my-4"
-                  v-for="(eco, i) in ecosystem"
-                  :key="i">
+                  v-for="(rsk, i) in risks"
+                  :key="rsk.id">
               <v-layout row wrap>
                 <v-flex>
                   <v-card>
                     <v-card-actions class="justify-center xs12">
-                      <v-btn flat class="justify" @click="submitForm(eco.id)" style="width:70%;">{{ eco.name }}</v-btn>
+                      <v-btn flat class="justify" @click="submitForm(rsk.id)" style="width:70%;">{{ rsk.name }}</v-btn>
                       <v-spacer></v-spacer>
                       <v-btn fab dark small color="primary" style="width: 30px; height: 30px;"
-                      @click="deleteRisk(eco.id)">
+                      @click="deleteRisk(rsk)">
                           <v-icon dark>remove</v-icon>
                       </v-btn>
                     </v-card-actions>
@@ -29,29 +29,30 @@
 </template>
 
 <script>
+  import { Risk } from "../api/risks";
   export default {
-      data: () => ({
-      ecosystem: [
-        {
-            "id": 1,
-            "name": "Cars"
-        },
-        {
-            "id": 2,
-            "name": "House"
-        }
-      ]
+    name: 'risk_types',
+    props: ['items'],
+    data: () => ({
+        risks: null,
     }),
-  methods: {
-    submitForm (data) {
-
-      console.log(data)
-
+    methods: {
+        submitForm (data) {
+            console.log(data)
+        },
+        deleteRisk(risk) {
+            Risk.delete(risk)
+            console.log(risk.id)
+        }
     },
-    deleteRisk(type) {
-      console.log(type)
-    }
-  }
+    mounted: function () {
+      console.log('mounter in risks types')
+
+      Risk.list().then(data => {
+          this.risks = data
+          console.log(data)
+      })
+    },
   }
 </script>
 

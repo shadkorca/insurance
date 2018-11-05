@@ -11,9 +11,7 @@
               required
             ></v-text-field>
           </v-form>
-          <v-btn
-            @click="submitForm"
-          >
+          <v-btn @click="submitForm">
             Add type
           </v-btn>
           <v-btn @click="clearForm">Clear</v-btn>
@@ -23,10 +21,12 @@
 </template>
 
 <script>
-  import { Risk } from "../api/risks";
-  // import { Policy } from "../api/policies";
+  import { Risk } from "../api/risks"
+  import RiskTypes from '@/components/RiskTypes'
+  // import router from "../router/index"
 
   export default {
+      name: 'add_risk',
       data: () => ({
           name: '',
           nameRules: [v => !!v || 'Name is required'],
@@ -41,19 +41,27 @@
           submitForm() {
               if (this.$refs.form.validate()) {
                   console.log(this.name)
-                  this.info = Risk.list()
-                  console.log(this.info)
-                  // пока не работает
                   // this.posts = Risk.create({ name: this.name })
-                  // console.log(this.posts)
 
+                  // router.push({
+                  //   name: 'add_risk',
+                  //   params: {
+                  //       items: this.name
+                  //   }
+                  // })
+
+                  // console.log(RiskTypes.items)
+
+                  Risk.create({ name: this.name }).then(data => {
+                      this.posts = data
+                      console.log(data)
+                  })
+                  // console.log(this.posts)
 
                   // working
                   // this.info = Policy.createPolicy({ name: this.name, risk_type_id: 1 })
-                  console.log((this.info))
                   // working
                   // this.info = Policy.listPolicies()
-                  console.log(this.info)
               }
           },
       }

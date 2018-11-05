@@ -26,30 +26,39 @@
       data: () => ({
           name: '',
           nameRules: [v => !!v || 'Name is required'],
-          info: null,
+          risks: null,
           posts: null
       }),
-
+      watch: {
+          getRisks() {
+              this.info = Policy.listPolicies()
+              console.log((this.risks))
+          }
+      },
+      mounted: function () {
+          this.risks = Policy.listPolicies()
+          // console.log((this.risks))
+      },
       methods: {
           clearForm() {
               this.$refs.form.reset()
           },
           submitForm() {
               if (this.$refs.form.validate()) {
+                  this.getRisks
                   console.log(this.name)
-                  this.info = Policy.list()
-                  console.log(this.info)
+                  // this.info = Policy.list()
+                  console.log(this.risks)
                   // пока не работает
                   // this.posts = Risk.create({ name: this.name })
                   // console.log(this.posts)
 
-
                   // working
                   // this.info = Policy.createPolicy({ name: this.name, risk_type_id: 1 })
-                  console.log((this.info))
+                  // console.log((this.info))
                   // working
                   // this.info = Policy.listPolicies()
-                  console.log(this.info)
+                  // console.log(this.info)
               }
           },
       }

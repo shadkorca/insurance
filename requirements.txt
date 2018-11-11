@@ -1,5 +1,9 @@
 Django==2.1.2
 django-cors-headers==2.4.0
 djangorestframework==3.9.0
+<<<<<<< HEAD
 gunicorn==19.9.0
 whitenoise==4.1
+=======
+
+>>>>>>> 33810da338468096ade98a86d5f7c491561603fa

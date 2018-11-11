@@ -26,7 +26,7 @@
   // import router from "../router/index"
 
   export default {
-      name: 'add_risk',
+      name: 'add_risk_type',
       data: () => ({
           name: '',
           nameRules: [v => !!v || 'Name is required'],
@@ -38,7 +38,7 @@
           clearForm() {
               this.$refs.form.reset()
           },
-          submitForm() {
+          submitForm(event) {
               if (this.$refs.form.validate()) {
                   console.log(this.name)
                   // this.posts = Risk.create({ name: this.name })
@@ -52,16 +52,19 @@
 
                   // console.log(RiskTypes.items)
 
-                  Risk.create({ name: this.name }).then(data => {
-                      this.posts = data
-                      console.log(data)
-                  })
+                  // Risk.create({ name: this.name }).then(data => {
+                  //     this.posts = data
+                  //     console.log(data)
+                  // })
                   // console.log(this.posts)
 
                   // working
                   // this.info = Policy.createPolicy({ name: this.name, risk_type_id: 1 })
                   // working
                   // this.info = Policy.listPolicies()
+
+                  this.$store.dispatch('createRisk', { name: this.name })
+                  event.preventDefault()
               }
           },
       }

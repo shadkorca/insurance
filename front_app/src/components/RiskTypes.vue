@@ -29,29 +29,37 @@
 </template>
 
 <script>
-  import { Risk } from "../api/risks";
-  export default {
+
+import { mapState } from 'vuex'
+// import router from "../router/index"
+
+
+export default {
     name: 'risk_types',
-    props: ['items'],
-    data: () => ({
-        risks: null,
-    }),
+    computed: mapState(['risks']),
     methods: {
         submitForm (data) {
-            console.log(data)
+            console.log('idx',data, typeof(data))
+            this.$router.push({
+                name: 'risk_details',
+                params: {
+                    id: data
+                }
+            })
         },
         deleteRisk(risk) {
-            Risk.delete(risk)
-            console.log(risk.id)
+            this.$store.dispatch('deleteRisk', risk)
         }
     },
     mounted: function () {
-      console.log('mounter in risks types')
+        console.log('mounter in risks types')
 
-      Risk.list().then(data => {
-          this.risks = data
-          console.log(data)
-      })
+        // Risk.list().then(data => {
+        //     this.risks = data
+        //     console.log(data)
+        // })
+
+        this.$store.dispatch('getRisks')
     },
   }
 </script>

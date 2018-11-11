@@ -6,8 +6,7 @@
       </v-toolbar-title>
       <v-toolbar-items class="hidden-sm-and-down text-uppercase">
         <v-btn flat class="font-weight-bold" to="/">Policies</v-btn>
-        <v-btn flat class="font-weight-bold" to="/risks_detail">Risk Types</v-btn>
-        <v-btn flat class="font-weight-bold" to="/risk_details">Risk Fields</v-btn>
+        <v-btn flat class="font-weight-bold" to="/risk_page">Risk Types</v-btn>
       </v-toolbar-items>
       <v-spacer></v-spacer>
     </v-toolbar>

@@ -10,21 +10,23 @@
               label="add field name"
               required
             ></v-text-field>
-            <v-select
-                :items="items"
+            <v-autocomplete
+                :items="f_types"
+                v-model="current_type"
                 label="Choose field type"
                 required
-            ></v-select>
+            ></v-autocomplete>
             <v-checkbox
-              v-model="checkbox"
-              label="is_enumerated">
+                v-model="checkbox"
+                label="is_enumerated">
             </v-checkbox>
             <template v-if="checkbox==true">
-            <v-select
-                :items="items"
+            <v-autocomplete
+                :items="enum_variant"
+                v-model="current_var"
                 label="Choose enumerate type"
                 required
-            ></v-select>
+            ></v-autocomplete>
             </template>
           </v-form>
           <v-btn @click="submitForm">Add field</v-btn>
@@ -37,18 +39,30 @@
   import { Risk } from "../api/risks";
 
   export default {
+      props: ['id'],
       data: () => ({
           name: '',
           nameRules: [v => !!v || 'Name is required'],
           info: null,
           posts: null,
-          items: [
+          current_type: '',
+          f_types: [
             'Number',
             'Text',
             'Checkbox',
             'Date'
           ],
-          checkbox: false
+          current_var: '',
+          enum_variant: [],
+          checkbox: false,
+          test: {
+              "id": 19,
+              "field_name": "Count",
+              "enumerate": false,
+              "enum_text": null,
+              "risk_type_id": 3,
+              "field_type_id": 4
+          },
       }),
 
       methods: {
@@ -57,8 +71,16 @@
           },
           submitForm() {
               if (this.$refs.form.validate()) {
-                  console.log(this.name)
-                  this.posts = Risk.create({ name: this.name })
+                  console.log('id->', this.id)
+                  // this.posts = Risk.create({ name: this.name })
+                  this.posts = Risk.addField(this.id, {
+                      field_name: "count",
+                      enumerate: false,
+                      enum_text: null,
+                      risk_type_id: 3,
+                      field_type_id: 1,
+                      crossdomain: true
+                  })
                   console.log(this.posts)
 
                   // working

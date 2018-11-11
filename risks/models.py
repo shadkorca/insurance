@@ -37,7 +37,7 @@ class Fields(models.Model):
     risk_type_id = models.ForeignKey(RiskTypeList, related_name='fields', on_delete=models.CASCADE)
     field_type_id = models.ForeignKey(FieldTypes, on_delete=models.CASCADE)
     enumerate = models.BooleanField()
-    enum_text = models.CharField(max_length=60)
+    enum_text = models.CharField(max_length=60, blank=True, null=True)
 
     def __str__(self):
         return self.field_name
@@ -56,6 +56,19 @@ class PolicyList(models.Model):
 
     def __str__(self):
         return self.name
+
+class FieldValue(models.Model):
+    field_type = models.ForeignKey(Fields, on_delete=models.CASCADE)
+    field_value = models.CharField(max_length=80)
+
+    def __str__(self):
+        return '%s %s' % (self.field_type.field_name,  self.field_value)
+
+'''
+id
+field_type - foreign key
+field_value - val
+'''
 
 
 '''

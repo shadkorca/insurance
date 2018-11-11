@@ -3,10 +3,10 @@
     <v-content>
       <v-layout>
         <v-flex column>
-          <RiskFields/>
+            <RiskFields :id="id"></RiskFields>
         </v-flex>
         <v-flex column>
-          <AddField/>
+            <AddField :id="id"></AddField>
         </v-flex>
       </v-layout>
     </v-content>
@@ -18,16 +18,19 @@ import RiskFields from '@/components/RiskFields'
 import AddField from '@/components/AddField'
 
 export default {
-  name: 'risks_dateils',
-  components: {
-    RiskFields,
-    AddField
-  },
-  data () {
-    return {
-      //
+    props: ['id'],
+    name: 'risk_details',
+    components: {
+        RiskFields,
+        AddField
+    },
+    mounted: function () {
+        console.log('mounted details', this.id)
+    },
+    data () {
+        return {
+        }
     }
-  }
 }
 </script>
 

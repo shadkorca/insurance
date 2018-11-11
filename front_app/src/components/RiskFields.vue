@@ -63,12 +63,12 @@
                 </template>
 
                 <template v-else-if="rsk.enumerate==true">
-                    <v-select
+                    <v-autocomplete
                         :items="items"
                         :label="rsk.field_name"
                         :data-vv-name="rsk.field_name"
                         required
-                    ></v-select>
+                    ></v-autocomplete>
                     <v-btn fab dark small color="primary" style="width: 30px; height: 30px;"
                     @click="deleteRisk(rsk.id)"><v-icon dark>close</v-icon></v-btn>
                 </template>
@@ -82,53 +82,57 @@
 </template>
 
 <script>
-  import { Risk } from "../api/risks"
+import { Risk } from "../api/risks"
 
-  export default {
-      data: () => ({
-      date: new Date().toISOString().substr(0, 10),
-      menu: false,
-      fields: null,
-      risks: null,
-      field_type : {
-        '1': 'Number',
-        '2': 'Text',
-        '3': 'Checkbox',
-        '4': 'Date'
-      },
-      items: [
-        'Item 1',
-        'Item 2',
-        'Item 3',
-        'Item 4'
-      ],
+export default {
+    props: ['id'],
+    data: () => ({
+        date: new Date().toISOString().substr(0, 10),
+        menu: false,
+        fields: null,
+        risks: null,
+        field_type : {
+            '1': 'Number',
+            '2': 'Text',
+            '3': 'Checkbox',
+            '4': 'Date'
+        },
+        items: [
+            'Item 1',
+            'Item 2',
+            'Item 3',
+            'Item 4'
+        ],
 
-      }),
-      methods: {
-          submitForm (data) {
-              console.log(data)
-          },
-          deleteRisk(type) {
-                console.log(type)
-          }
+    }),
+  methods: {
+      submitForm (data) {
+          console.log(data)
       },
-      mounted: function () {
-        Risk.details_test('5').then(resp => {
+      deleteRisk(type) {
+          console.log(type)
+          console.log('prop', this.id, typeof(this.id))
+      }
+  },
+  mounted: function () {
+      console.log('prop mounter', this.id, typeof(this.id))
+      Risk.details_test(this.id).then(resp => {
           this.fields = resp.data
-        })
-      },
-      // submit () {
-      //   if (this.$refs.form.validate()) {
-      //     // Native form submission is not yet supported
-      //     axios.post('/api/submit', {
-      //       name: this.name,
-      //       email: this.email,
-      //       select: this.select,
-      //       checkbox: this.checkbox
-      //     })
-      //   }
-      // },
+      })
+
   }
+  // submit () {
+  //   if (this.$refs.form.validate()) {
+  //     // Native form submission is not yet supported
+  //     axios.post('/api/submit', {
+  //       name: this.name,
+  //       email: this.email,
+  //       select: this.select,
+  //       checkbox: this.checkbox
+  //     })
+  //   }
+  // },
+}
 </script>
 
 <style>

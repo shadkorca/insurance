@@ -29,40 +29,34 @@
 </template>
 
 <script>
-  import { Policy } from "../api/policies";
-  export default {
-    data: () => ({
-      policies: null
-    }),
-    // watch: {
-    //       getPolicies() {
-    //           Policy.listPolicies().then(data => {
-    //               this.policies = data
-    //               console.log('watch data')
-    //               console.log(data)
-    //           })
-    //           console.log(this.policies)
-    //       }
-    //   },
+import { mapState } from 'vuex'
+
+export default {
+    computed: mapState(['policies']),
     mounted: function () {
-      console.log('mounted')
-      this.policies = Policy.listPolicies()
-        Policy.listPolicies().then(data => {
-            this.policies = data
-            console.log(data)
-        })
-      console.log(this.policies)
+        this.$store.dispatch('getPolicies')
     },
     methods: {
-      submitForm (data) {
-        console.log(data)
-      },
-      deletePolicy(pol) {
-          Policy.deletePolicy(pol)
-          console.log(pol.id)
-      }
+        submitForm (numb) {
+            console.log(numb)
+            this.$router.push({
+                name: 'policy_details',
+                params: {
+                    id: numb
+                }
+            })
+        },
+        deletePolicy(pol) {
+            console.log(pol)
+
+            // var b = a.filter(item => {
+            //     return item['id']>37; })
+             // a.filter(item => {
+             //    return item['id']!=40; })
+            this.$store.dispatch('deletePolicy', pol)
+        }
     }
-  }
+}
 </script>
 
 <style>

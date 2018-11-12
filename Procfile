@@ -1,1 +1,1 @@
-web: gunicorn whispering-wildwood-96195.wsgi --log-file -
+web: gunicorn insurance.wsgi --log-file -

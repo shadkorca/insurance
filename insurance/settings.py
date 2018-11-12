@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-import django_heroku
+# import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,10 +24,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '8=crpwf=npep--=9yve6h%@wb=v=@gr=32x)1%v6%@45c5jf&)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-# DEBUG = True
+# DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['whispering-wildwood-96195.herokuapp.com', '127.0.0.1']
+# ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['whispering-wildwood-96195.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -60,12 +61,12 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = (
-    'localhost:8080',
-)
-CORS_ORIGIN_REGEX_WHITELIST = (
-    'localhost:8080',
-)
+# CORS_ORIGIN_WHITELIST = (
+#     'localhost:8080',
+# )
+# CORS_ORIGIN_REGEX_WHITELIST = (
+#     'localhost:8080',
+# )
 
 
 ROOT_URLCONF = 'insurance.urls'
@@ -141,14 +142,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+#
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),
+# )
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
-
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 
 # import dj_database_url
 # db_from_env = dj_database_url.config(conn_max_age=500)
@@ -170,3 +171,7 @@ DATABASES = {
           default='sqlite:////{0}'.format(os.path.join(BASE_DIR, 'db.sqlite3'))
       )
 }
+
+# print('os path')
+# print(os.path.join(BASE_DIR, 'db.sqlite3'))
+# print(BASE_DIR, 'BASE DIR')

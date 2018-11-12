@@ -14,10 +14,10 @@ import datetime
 class RiskViewSet(viewsets.ModelViewSet):
     types_list = ['Number', 'Text', 'Checkbox', 'Date']
     # for type in types_list:
-    a = FieldTypes.objects.filter(type_name__in=types_list)
-    if not a:
-        for type in types_list:
-            FieldTypes.objects.create(type_name=type)
+    # a = FieldTypes.objects.filter(type_name__in=types_list)
+    # if not a:
+    #     for type in types_list:
+    #         FieldTypes.objects.create(type_name=type)
     queryset = RiskTypeList.objects.all()
     serializer_class = RiskTypesSerializer
 

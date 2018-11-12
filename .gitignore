@@ -6,3 +6,4 @@
 .idea/*
 *.xml
 migrations/*
+db.sqlite3

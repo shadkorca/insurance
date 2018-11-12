@@ -25,7 +25,7 @@ SECRET_KEY = '8=crpwf=npep--=9yve6h%@wb=v=@gr=32x)1%v6%@45c5jf&)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['whispering-wildwood-96195.herokuapp.com', '127.0.0.1']
 
 
 # Application definition

@@ -5,3 +5,4 @@
 *.egg
 .idea/*
 *.xml
+*.sqlite3

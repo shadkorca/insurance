@@ -31,19 +31,18 @@
 <script>
 
 import { mapState } from 'vuex'
-// import router from "../router/index"
 
 
 export default {
     name: 'risk_types',
     computed: mapState(['risks']),
     methods: {
-        submitForm (data) {
-            console.log('idx',data, typeof(data))
+        submitForm (numb) {
+            // console.log('idx',data, typeof(data))
             this.$router.push({
                 name: 'risk_details',
                 params: {
-                    id: data
+                    id: numb
                 }
             })
         },
@@ -52,13 +51,6 @@ export default {
         }
     },
     mounted: function () {
-        console.log('mounter in risks types')
-
-        // Risk.list().then(data => {
-        //     this.risks = data
-        //     console.log(data)
-        // })
-
         this.$store.dispatch('getRisks')
     },
   }

@@ -4,40 +4,41 @@
       <v-flex class="justify-center" xs8 offset-xs2>
         <h2 class="headline font-weight-bold">Risk Type Fields</h2>
         <v-flex class="xs8 offset-xs2">
-            <form ref="form" class="my-2"
-                  v-for="rsk in fields"
-                  :key="rsk.id">
+            <form ref="form" class="my-2">
 
-            <v-layout row wrap>
-                <template v-if="rsk.field_type_id==1 && rsk.enumerate==false">
+            <v-layout row wrap
+                v-for="fld in fields"
+                :key="fld.id">
+                <template v-if="fld.field_type_id==1 && fld.enumerate==false">
                     <v-text-field
-                        :label="rsk.field_name"
-                        :data-vv-name="rsk.field_name"
+                        :label="fld.field_name"
+                        :data-vv-name="fld.field_name"
+                        type="number"
                         required>
                     </v-text-field>
                     <v-btn fab dark small color="primary" style="width: 30px; height: 30px;"
-                    @click="deleteRisk(rsk.id)"><v-icon dark>close</v-icon></v-btn>
+                    @click="deleteRisk(fld.id)"><v-icon dark>close</v-icon></v-btn>
                 </template>
 
-                <template v-else-if="rsk.field_type_id==2 && rsk.enumerate==false">
+                <template v-else-if="fld.field_type_id==2 && fld.enumerate==false">
                     <v-text-field
-                        :label="rsk.field_name"
-                        :data-vv-name="rsk.field_name"
+                        :label="fld.field_name"
+                        :data-vv-name="fld.field_name"
                         required>
                     </v-text-field>
                     <v-btn fab dark small color="primary" style="width: 30px; height: 30px;"
-                    @click="deleteRisk(rsk.id)"><v-icon dark>close</v-icon></v-btn>
+                    @click="deleteRisk(fld.id)"><v-icon dark>close</v-icon></v-btn>
                 </template>
 
-                <template v-else-if="rsk.field_type_id==3 && rsk.enumerate==false">
+                <template v-else-if="fld.field_type_id==3 && fld.enumerate==false">
                     <v-checkbox
-                      :label="rsk.field_name">
+                      :label="fld.field_name">
                     </v-checkbox>
                     <v-btn fab dark small color="primary" style="width: 30px; height: 30px;"
-                    @click="deleteRisk(rsk.id)"><v-icon dark>close</v-icon></v-btn>
+                    @click="deleteRisk(fld.id)"><v-icon dark>close</v-icon></v-btn>
                 </template>
 
-                <template v-else-if="rsk.field_type_id==4 && rsk.enumerate==false">
+                <template v-else-if="fld.field_type_id==4 && fld.enumerate==false">
                     <v-menu
                         :close-on-content-click="false"
                         v-model="menu"
@@ -51,7 +52,7 @@
                         <v-text-field
                           slot="activator"
                           v-model="date"
-                          :label="rsk.field_name"
+                          :label="fld.field_name"
                           append-icon="event"
                           readonly>
                         </v-text-field>
@@ -59,18 +60,19 @@
                     </v-menu>
                     <v-spacer></v-spacer>
                     <v-btn fab dark small color="primary" style="width: 30px; height: 30px;"
-                    @click="deleteRisk(rsk.id)"><v-icon dark>close</v-icon></v-btn>
+                    @click="deleteRisk(fld.id)"><v-icon dark>close</v-icon></v-btn>
                 </template>
 
-                <template v-else-if="rsk.enumerate==true">
+                <template v-else-if="fld.enumerate==true">
                     <v-autocomplete
-                        :items="items"
-                        :label="rsk.field_name"
-                        :data-vv-name="rsk.field_name"
+                        :items="variants[fld.id]"
+                        :label="fld.field_name"
+                        :data-vv-name="fld.field_name"
                         required
                     ></v-autocomplete>
                     <v-btn fab dark small color="primary" style="width: 30px; height: 30px;"
-                    @click="deleteRisk(rsk.id)"><v-icon dark>close</v-icon></v-btn>
+                    @click="deleteRisk(fld.id)"><v-icon dark>close</v-icon>
+                    </v-btn>
                 </template>
 
              </v-layout>
@@ -82,14 +84,14 @@
 </template>
 
 <script>
-import { Risk } from "../api/risks"
+import { mapState } from 'vuex'
 
 export default {
     props: ['id'],
+    computed: mapState(['fields']),
     data: () => ({
         date: new Date().toISOString().substr(0, 10),
         menu: false,
-        fields: null,
         risks: null,
         field_type : {
             '1': 'Number',
@@ -103,35 +105,24 @@ export default {
             'Item 3',
             'Item 4'
         ],
-
+        variants: {},
+        join_str: '#$',
     }),
   methods: {
-      submitForm (data) {
-          console.log(data)
-      },
-      deleteRisk(type) {
-          console.log(type)
-          console.log('prop', this.id, typeof(this.id))
+      deleteRisk(field_id) {
+          this.$store.dispatch('deleteField', [this.id, field_id])
       }
   },
   mounted: function () {
-      console.log('prop mounter', this.id, typeof(this.id))
-      Risk.details_test(this.id).then(resp => {
-          this.fields = resp.data
-      })
-
+      this.$store.dispatch('getFields', this.id)
+      for (const [key, value] of Object.entries(this.fields)) {
+          console.log(key, value)
+          if (value['enumerate'] === true) {
+            this.variants[value['id']]=value['enum_text'].split(this.join_str)
+          }
+      }
+      console.log('fields', this.variants)
   }
-  // submit () {
-  //   if (this.$refs.form.validate()) {
-  //     // Native form submission is not yet supported
-  //     axios.post('/api/submit', {
-  //       name: this.name,
-  //       email: this.email,
-  //       select: this.select,
-  //       checkbox: this.checkbox
-  //     })
-  //   }
-  // },
 }
 </script>
 

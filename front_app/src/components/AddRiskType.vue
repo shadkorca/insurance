@@ -11,10 +11,7 @@
               required
             ></v-text-field>
           </v-form>
-          <v-btn @click="submitForm">
-            Add type
-          </v-btn>
-          <v-btn @click="clearForm">Clear</v-btn>
+          <v-btn @click="submitForm">Add type</v-btn>
         </v-flex>
     </v-layout>
   </v-container>
@@ -40,30 +37,8 @@
           },
           submitForm(event) {
               if (this.$refs.form.validate()) {
-                  console.log(this.name)
-                  // this.posts = Risk.create({ name: this.name })
-
-                  // router.push({
-                  //   name: 'add_risk',
-                  //   params: {
-                  //       items: this.name
-                  //   }
-                  // })
-
-                  // console.log(RiskTypes.items)
-
-                  // Risk.create({ name: this.name }).then(data => {
-                  //     this.posts = data
-                  //     console.log(data)
-                  // })
-                  // console.log(this.posts)
-
-                  // working
-                  // this.info = Policy.createPolicy({ name: this.name, risk_type_id: 1 })
-                  // working
-                  // this.info = Policy.listPolicies()
-
                   this.$store.dispatch('createRisk', { name: this.name })
+                  this.clearForm()
                   event.preventDefault()
               }
           },

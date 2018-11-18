@@ -16,7 +16,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -28,7 +27,7 @@ SECRET_KEY = '8=crpwf=npep--=9yve6h%@wb=v=@gr=32x)1%v6%@45c5jf&)'
 DEBUG = True
 
 # ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = ['whispering-wildwood-96195.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['whispering-wildwood-96195.herokuapp.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -41,32 +40,34 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'corsheaders',
     'risks',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsPostCsrfMiddleware',
+    # 'risks.middleware.corsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'corsheaders.middleware.CorsPostCsrfMiddleware',
-    'risks.middleware.corsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-# CORS_ORIGIN_WHITELIST = (
-#     'localhost:8080',
-# )
-# CORS_ORIGIN_REGEX_WHITELIST = (
-#     'localhost:8080',
-# )
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost:8080',
+)
+CORS_ORIGIN_REGEX_WHITELIST = (
+    'localhost:8080',
+)
 
 
 ROOT_URLCONF = 'insurance.urls'
@@ -125,8 +126,6 @@ AUTH_PASSWORD_VALIDATORS = [
 #         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
 #     ]
 # }
-# Internationalization
-# https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -156,12 +155,12 @@ STATICFILES_DIRS = (
 # DATABASES['default'].update(db_from_env)
 
 
-SECURE_CONTENT_TYPE_NOSNIFF = True
-
-SESSION_COOKIE_SECURE = True
-
-CSRF_COOKIE_SECURE = True
-
+# SECURE_CONTENT_TYPE_NOSNIFF = True
+#
+# SESSION_COOKIE_SECURE = True
+#
+# CSRF_COOKIE_SECURE = True
+#
 X_FRAME_OPTIONS = 'DENY'
 
 import dj_database_url
@@ -172,6 +171,7 @@ DATABASES = {
       )
 }
 
+APPEND_SLASH=False
 # print('os path')
 # print(os.path.join(BASE_DIR, 'db.sqlite3'))
 # print(BASE_DIR, 'BASE DIR')

@@ -60,6 +60,10 @@ class RiskFieldsView(viewsets.ModelViewSet):
         super().perform_destroy(queryset)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+    def create(self, request, *args, **kwargs):
+        print('request', request.data)
+        return super().create(request, args, kwargs)
+
 
 class PolicyViewSets(viewsets.ModelViewSet):
     queryset = PolicyList.objects.all()

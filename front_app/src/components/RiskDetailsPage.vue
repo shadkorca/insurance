@@ -24,9 +24,6 @@ export default {
         RiskFields,
         AddField
     },
-    mounted: function () {
-        console.log('mounted details', this.id)
-    },
     data () {
         return {
         }

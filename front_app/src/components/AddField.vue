@@ -21,10 +21,12 @@
                 label="is_enumerated">
             </v-checkbox>
             <template v-if="checkbox==true">
+                <!--Add text to an input and press enter.-->
             <v-autocomplete
                 :items="enum_variant"
                 v-model="current_var"
-                label="Choose enumerate type"
+                label="Add text and press Enter"
+                @keyup.native.enter="addValue"
                 required
             ></v-autocomplete>
             </template>
@@ -36,66 +38,64 @@
 </template>
 
 <script>
-  import { Risk } from "../api/risks";
 
-  export default {
-      props: ['id'],
-      data: () => ({
-          name: '',
-          nameRules: [v => !!v || 'Name is required'],
-          info: null,
-          posts: null,
-          current_type: '',
-          f_types: [
-            'Number',
-            'Text',
-            'Checkbox',
-            'Date'
-          ],
-          current_var: '',
-          enum_variant: [],
-          checkbox: false,
-          test: {
-              "id": 19,
-              "field_name": "Count",
-              "enumerate": false,
-              "enum_text": null,
-              "risk_type_id": 3,
-              "field_type_id": 4
-          },
-      }),
+export default {
+    props: ['id'],
+    data: () => ({
+        name: '',
+        nameRules: [v => !!v || 'Name is required'],
+        info: null,
+        posts: null,
+        current_type: '',
+        f_types: [
+          'Number',
+          'Text',
+          'Checkbox',
+          'Date'
+        ],
+        field_types: {
+          'Number': '1',
+          'Text': '2',
+          'Checkbox': '3',
+          'Date': '4'
+        },
+        current_var: '',
+        enum_variant: [],
+        join_str: '#$',
+        checkbox: false
+    }),
 
-      methods: {
-          clearForm() {
-              this.$refs.form.reset()
-          },
-          submitForm() {
-              if (this.$refs.form.validate()) {
-                  console.log('id->', this.id)
-                  // this.posts = Risk.create({ name: this.name })
-                  this.posts = Risk.addField(this.id, {
-                      field_name: "count",
-                      enumerate: false,
-                      enum_text: null,
-                      risk_type_id: 3,
-                      field_type_id: 1,
-                      crossdomain: true
-                  })
-                  console.log(this.posts)
+    methods: {
+        addValue: function(e){
+            this.enum_variant.push(e.target.value)
+        },
+        clearForm() {
+            this.$refs.form.reset()
+        },
+        submitForm() {
+            if (this.$refs.form.validate()) {
+                // console.log('id->', this.id)
+                // this.posts = Risk.create({ name: this.name })
+                // this.posts = Field.addField(this.id, {
+                //     field_name: this.name,
+                //     enumerate: this.checkbox,
+                //     enum_text: this.current_var,
+                //     risk_type_id: this.id,
+                //     field_type_id: this.field_types[this.current_type]
+                // })
 
-                  // working
-                  // this.info = Policy.createPolicy({ name: this.name, risk_type_id: 1 })
-                  // working
-                  // this.info = Policy.listPolicies()
-              }
-          },
-      }
-      // mounted: function () {
-      //     console.log('mounter in risks type')
-      //     this.info = Risk.list()
-      //     console.log((this.info))
-      // },
-  }
+                this.$store.dispatch('createField', [{id: this.id}, {
+                    field_name: this.name,
+                    enumerate: this.checkbox,
+                    enum_text: this.enum_variant.join(this.join_str),
+                    risk_type_id: parseInt(this.id),
+                    field_type_id: this.field_types[this.current_type]
+                }])
+                this.clearForm()
+            }
+        },
+    }
+}
 </script>
 
 <style>

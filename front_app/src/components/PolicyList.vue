@@ -38,7 +38,6 @@ export default {
     },
     methods: {
         submitForm (numb) {
-            console.log(numb)
             this.$router.push({
                 name: 'policy_details',
                 params: {
@@ -47,12 +46,6 @@ export default {
             })
         },
         deletePolicy(pol) {
-            console.log(pol)
-
-            // var b = a.filter(item => {
-            //     return item['id']>37; })
-             // a.filter(item => {
-             //    return item['id']!=40; })
             this.$store.dispatch('deletePolicy', pol)
         }
     }

@@ -6,5 +6,5 @@
 .idea/*
 *.xml
 *.sqlite3
-frontend/*
-front_app/*
+/frontend/*
+/front_app/*

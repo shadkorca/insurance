@@ -74,7 +74,6 @@ export default {
         },
         submitForm() {
             if (this.$refs.form.validate()) {
-                // console.log('id->', this.id)
                 // this.posts = Risk.create({ name: this.name })
                 // this.posts = Field.addField(this.id, {
                 //     field_name: this.name,

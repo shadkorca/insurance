@@ -91,12 +91,6 @@ export default {
             '3': 'Checkbox',
             '4': 'Date'
         },
-        items: [
-            'Item 1',
-            'Item 2',
-            'Item 3',
-            'Item 4'
-        ],
         variants: {},
         join_str: '#$',
     }),

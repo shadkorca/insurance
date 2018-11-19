@@ -37,12 +37,9 @@ export default {
                         risk_id = item['id']
                     }
                 })
-                console.log('risk_id - ', risk_id)
-
                 this.$store.dispatch('createPolicy', { risk_type_id: risk_id })
 
                 // for (let i=0; i<this.risks.length; i++) {
-                //     // console.log(this.risks[i])
                 //     if (this.risks[i] === this.current_risk) {
                 //         risk_id = this.risks[i]['id']
                 //     }

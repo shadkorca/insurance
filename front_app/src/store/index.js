@@ -103,7 +103,6 @@ const actions = {
     createField ({ commit }, fieldData) {
         let field_id = fieldData[0]['id']
         let config = fieldData[1]
-        console.log('fieldData', config)
         Field.addField(field_id, config).then(field => {
             commit(ADD_FIELD, field)
         })

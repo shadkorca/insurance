@@ -38,7 +38,6 @@ export default {
     computed: mapState(['risks']),
     methods: {
         submitForm (numb) {
-            // console.log('idx',data, typeof(data))
             this.$router.push({
                 name: 'risk_details',
                 params: {

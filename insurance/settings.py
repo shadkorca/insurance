@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-# import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,7 +26,7 @@ SECRET_KEY = '8=crpwf=npep--=9yve6h%@wb=v=@gr=32x)1%v6%@45c5jf&)'
 DEBUG = True
 
 # ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = ['whispering-wildwood-96195.herokuapp.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['insurance-the-api-of-risks.herokuapp.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -91,10 +90,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'insurance.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -121,11 +116,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-#     ]
-# }
 
 LANGUAGE_CODE = 'en-us'
 
@@ -148,12 +138,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-# django_heroku.settings(locals())
-
-# import dj_database_url
-# db_from_env = dj_database_url.config(conn_max_age=500)
-# DATABASES['default'].update(db_from_env)
-
 
 # SECURE_CONTENT_TYPE_NOSNIFF = True
 #
@@ -172,6 +156,3 @@ DATABASES = {
 }
 
 APPEND_SLASH=False
-# print('os path')
-# print(os.path.join(BASE_DIR, 'db.sqlite3'))
-# print(BASE_DIR, 'BASE DIR')

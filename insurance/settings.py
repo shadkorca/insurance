@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '8=crpwf=npep--=9yve6h%@wb=v=@gr=32x)1%v6%@45c5jf&)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['insurance-the-api-of-risks.herokuapp.com', '127.0.0.1', 'localhost']
 

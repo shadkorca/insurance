@@ -1,19 +1,14 @@
 # coding=utf-8
 
-from .serializers import RiskTypesSerializer, PolicyListSerializer, FieldsSerializer
-from .models import RiskTypeList, FieldTypes, Fields, PolicyList
+from .serializers import RiskTypesSerializer, PolicyListSerializer, FieldsSerializer, PolicyFieldsSerializer
+from .models import RiskTypeList, FieldTypes, Fields, PolicyList, FieldValue
 from rest_framework.response import Response
-from rest_framework import mixins, status, viewsets
+from rest_framework import status, viewsets
 import datetime
 
 
-# class RiskViewSet(mixins.CreateModelMixin,
-#                   mixins.DestroyModelMixin,
-#                   mixins.ListModelMixin,
-#                   viewsets.GenericViewSet):
 class RiskViewSet(viewsets.ModelViewSet):
     types_list = ['Number', 'Text', 'Checkbox', 'Date']
-    # for type in types_list:
     a = FieldTypes.objects.filter(type_name__in=types_list)
     if not a:
         for type in types_list:
@@ -21,28 +16,10 @@ class RiskViewSet(viewsets.ModelViewSet):
     queryset = RiskTypeList.objects.all()
     serializer_class = RiskTypesSerializer
 
-    # def retrieve(self, request, pk=None):
-    #     queryset = Fields.objects.filter(risk_type_id=pk)
-    #     serializer = FieldsSerializer(queryset, many=True)
-    #     return Response(serializer.data)
-
-    # def update(self, request, pk=None):
-    #     queryset = Fields.objects.filter(risk_type_id=pk)
-    #     serializer = FieldsSerializer(queryset, many=True)
-    #     return Response(serializer.data)
-
-    # def destroy(self, request, pk=None):
-    #     queryset = Fields.objects.filter(risk_type_id=pk)
-    #     serializer = FieldsSerializer(queryset, many=True)
-    #     print('pk %s' % pk)
-    #     print('request %s' % format(request))
-    #     return Response(serializer.data)
-
 
 class RiskFieldsView(viewsets.ModelViewSet):
     queryset = Fields.objects.all()
     serializer_class = FieldsSerializer
-    # http_method_names = ['get', 'post', 'head', 'option']
 
     def list(self, request, pk=None, sk=None):
         if not sk:
@@ -56,13 +33,8 @@ class RiskFieldsView(viewsets.ModelViewSet):
 
     def destroy(self, request, pk=None, sk=None):
         queryset = Fields.objects.filter(risk_type_id=pk).filter(id=sk)
-        # serializer = FieldsSerializer(queryset, many=True)
         super().perform_destroy(queryset)
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-    def create(self, request, *args, **kwargs):
-        print('request', request.data)
-        return super().create(request, args, kwargs)
 
 
 class PolicyViewSets(viewsets.ModelViewSet):
@@ -72,9 +44,6 @@ class PolicyViewSets(viewsets.ModelViewSet):
     def list(self, request):
         queryset = PolicyList.objects.all()
         serializer = PolicyListSerializer(queryset, many=True)
-        # print(serializer.data)
-        if request.method == 'POST':
-            print(' request.data %s ' % request.data)
 
         return Response(serializer.data)
 
@@ -90,7 +59,6 @@ class PolicyViewSets(viewsets.ModelViewSet):
 
         data['date'] = date_now.date().isoformat()
         data['name'] = '%s-%s%s%s%s' % (name[:3].upper(), date_now.second, date_now.minute, date_now.hour, date_now.day)
-        # data['name'] = name[:3].upper() + str(self.counter) + date_now
 
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
@@ -98,7 +66,6 @@ class PolicyViewSets(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-    # def retrieve(self, request, pk=None):
-    #     print(request)
-    #     print('---pk %s' % pk)
-    #     # queryset = PolicyList.objects.filter()
+class PolicyFieldsView(viewsets.ModelViewSet):
+    queryset = FieldValue.objects.all()
+    serializer_class = PolicyFieldsSerializer

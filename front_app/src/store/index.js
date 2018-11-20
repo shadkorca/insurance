@@ -13,8 +13,8 @@ Vue.use(Vuex)
 const state = {
     risks: [],
     policies: [],
-    fields: []
-}
+    fields: [],
+};
 
 
 const getters = {
@@ -27,7 +27,7 @@ const getters = {
     fields(state) {
         return state.fields
     }
-}
+};
 
 const mutations = {
     [ADD_RISK] (state, risk) {
@@ -65,7 +65,7 @@ const mutations = {
     [LIST_FIELDS] (state, { fields }) {
         state.fields = fields
     }
-}
+};
 
 const actions = {
     createRisk ({ commit }, riskData) {
@@ -74,7 +74,7 @@ const actions = {
         })
     },
     deleteRisk ({ commit }, del_risk) {
-        Risk.delete(del_risk).then(risk => {
+        Risk.delete(del_risk).then(() => {
             commit(REMOVE_RISK, del_risk)
         })
     },
@@ -90,7 +90,7 @@ const actions = {
         })
     },
     deletePolicy ({ commit }, del_policy) {
-        Policy.deletePolicy(del_policy).then(policy => {
+        Policy.deletePolicy(del_policy).then(() => {
             commit(REMOVE_POLICY, del_policy)
         })
     },
@@ -110,7 +110,7 @@ const actions = {
     deleteField ({ commit }, data) {
         let risk_id = data[0]
         let field_id = data[1]
-        Field.delField(risk_id, field_id).then(field => {
+        Field.delField(risk_id, field_id).then(() => {
             commit(REMOVE_FIELD, field_id)
         })
     },
@@ -119,7 +119,7 @@ const actions = {
             commit(LIST_FIELDS, { fields })
         })
     }
-}
+};
 
 export default new Vuex.Store({
   state,

@@ -3,6 +3,7 @@ import { HTTP } from './common'
 export const Field = {
     listFields(id) {
         return HTTP.get(`/risks/fields/${id}/`).then(response => {
+            // console.log('response', response.data)
             return response.data
         })
     },
@@ -14,5 +15,5 @@ export const Field = {
     delField(risk_id, field_id) {
         return HTTP.delete(`/risks/fields/${risk_id}/${field_id}`)
     }
-}
+};
 

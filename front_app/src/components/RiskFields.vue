@@ -89,6 +89,17 @@ import { mapState } from 'vuex'
 export default {
     props: ['id'],
     computed: mapState(['fields']),
+    mounted: function () {
+        this.$store.dispatch('getFields', this.id)
+    },
+    updated() {
+        mapState(['fields']);
+        for (const [key, value] of Object.entries(this.fields)) {
+            if (value['enumerate'] === true) {
+                this.variants[value['id']]=value['enum_text'].split(this.join_str)
+            }
+        }
+    },
     data: () => ({
         date: new Date().toISOString().substr(0, 10),
         menu: false,
@@ -99,30 +110,15 @@ export default {
             '3': 'Checkbox',
             '4': 'Date'
         },
-        items: [
-            'Item 1',
-            'Item 2',
-            'Item 3',
-            'Item 4'
-        ],
         variants: {},
-        join_str: '#$',
+        join_str: '#$'
     }),
   methods: {
       deleteRisk(field_id) {
           this.$store.dispatch('deleteField', [this.id, field_id])
       }
   },
-  mounted: function () {
-      this.$store.dispatch('getFields', this.id)
-      for (const [key, value] of Object.entries(this.fields)) {
-          console.log(key, value)
-          if (value['enumerate'] === true) {
-            this.variants[value['id']]=value['enum_text'].split(this.join_str)
-          }
-      }
-      console.log('fields', this.variants)
-  }
+
 }
 </script>
 

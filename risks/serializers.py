@@ -1,10 +1,7 @@
 # coding=utf-8
 
 from rest_framework import serializers
-# from .models import RiskTypeModel
-from .models import RiskTypeList, FieldTypes, Fields, PolicyList
-
-
+from .models import RiskTypeList, Fields, PolicyList, FieldValue
 
 
 class FieldsSerializer(serializers.ModelSerializer):
@@ -15,7 +12,6 @@ class FieldsSerializer(serializers.ModelSerializer):
 
 
 class RiskTypesSerializer(serializers.ModelSerializer):
-    # fields = FieldsSerializer(many=True)
 
     class Meta:
         model = RiskTypeList
@@ -29,4 +25,9 @@ class PolicyListSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class PolicyFieldsSerializer(serializers.ModelSerializer):
+    field_type = FieldsSerializer()
 
+    class Meta:
+        model = FieldValue
+        fields = '__all__'

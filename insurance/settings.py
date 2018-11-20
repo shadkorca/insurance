@@ -11,8 +11,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import dj_database_url
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
@@ -22,10 +22,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '8=crpwf=npep--=9yve6h%@wb=v=@gr=32x)1%v6%@45c5jf&)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = False
 DEBUG = True
 
-# ALLOWED_HOSTS = ['*']
 ALLOWED_HOSTS = ['insurance-the-api-of-risks.herokuapp.com', '127.0.0.1', 'localhost']
 
 
@@ -38,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'rest_framework',
     'risks',
     'corsheaders',
@@ -52,7 +51,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsPostCsrfMiddleware',
-    # 'risks.middleware.corsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -61,12 +59,12 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_ORIGIN_WHITELIST = (
-    'localhost:8080',
-)
-CORS_ORIGIN_REGEX_WHITELIST = (
-    'localhost:8080',
-)
+# CORS_ORIGIN_WHITELIST = (
+#     'localhost:8080',
+# )
+# CORS_ORIGIN_REGEX_WHITELIST = (
+#     'localhost:8080',
+# )
 
 
 ROOT_URLCONF = 'insurance.urls'
@@ -89,13 +87,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'insurance.wsgi.application'
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
 
 
 # Password validation
@@ -132,22 +123,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-
-# SECURE_CONTENT_TYPE_NOSNIFF = True
-#
-# SESSION_COOKIE_SECURE = True
-#
-# CSRF_COOKIE_SECURE = True
-#
 X_FRAME_OPTIONS = 'DENY'
 
-import dj_database_url
 
 DATABASES = {
       'default': dj_database_url.config(

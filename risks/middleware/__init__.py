@@ -1,2 +1,0 @@
-from .corsMiddleware import corsMiddleware
-

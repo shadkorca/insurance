@@ -1,25 +1,30 @@
-# insurance
-django, vue.js
+## insurance
 
-Для запуска проекта должны быть установлены следующие пакеты:
 
-pip install django djangorestframework
+These is insurance project designed so that everyone can choose and customize their type of insurance for themselves
 
-pip install django-cors-heders
+# Django
 
-Node.js
+for install project locally, run
+```
+pip install -r requirements.txt
+```
+The models diagram named myapp_models.png
+and located in home directory
 
-npm install pug --save-dev
 
+# Node.js
+
+```
 npm install axios vue-axios --save
-
 npm install vuex --save
+```
+for running the app
+```
+npm run serve
+```
 
-Далее для запуска, нужно зайти во фронтенд
-
-cd frontend
-npm install
-
-npm run dev
-
-python manage.py runserver
+for build the app to
+```
+npm run build
+```

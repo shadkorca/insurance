@@ -4,8 +4,6 @@ import risk_page from '@/components/RiskPage'
 import policies from '@/components/PolicyPage'
 import risk_details from '@/components/RiskDetailsPage'
 import policy_fields from '@/components/PolicyFields'
-// import policy_details from '@/components/PolicyDetailsPage'
-// import risk_fields from '@/components/RiskFields'
 
 
 Vue.use(Router)

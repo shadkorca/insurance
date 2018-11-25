@@ -18,32 +18,28 @@
 </template>
 
 <script>
-  import { Risk } from "../api/risks"
-  import RiskTypes from '@/components/RiskTypes'
-  // import router from "../router/index"
+export default {
+    name: 'add_risk_type',
+    data: () => ({
+        name: '',
+        nameRules: [v => !!v || 'Name is required'],
+        info: null,
+        posts: null
+    }),
 
-  export default {
-      name: 'add_risk_type',
-      data: () => ({
-          name: '',
-          nameRules: [v => !!v || 'Name is required'],
-          info: null,
-          posts: null
-      }),
-
-      methods: {
-          clearForm() {
-              this.$refs.form.reset()
-          },
-          submitForm(event) {
-              if (this.$refs.form.validate()) {
-                  this.$store.dispatch('createRisk', { name: this.name })
-                  this.clearForm()
-                  event.preventDefault()
-              }
-          },
-      }
-  }
+    methods: {
+        clearForm() {
+            this.$refs.form.reset()
+        },
+        submitForm(event) {
+            if (this.$refs.form.validate()) {
+                this.$store.dispatch('createRisk', { name: this.name })
+                this.clearForm()
+                event.preventDefault()
+            }
+        },
+    }
+}
 </script>
 
 <style>

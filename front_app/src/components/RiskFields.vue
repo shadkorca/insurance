@@ -7,38 +7,38 @@
             <form ref="form" class="my-2">
 
             <v-layout row wrap
-                v-for="fld in fields"
-                :key="fld.id">
-                <template v-if="fld.field_type_id==1 && fld.enumerate==false">
+                v-for="field in fields"
+                :key="field.id">
+                <template v-if="field.field_type_id==1 && field.enumerate==false">
                     <v-text-field
-                        :label="fld.field_name"
-                        :data-vv-name="fld.field_name"
+                        :label="field.field_name"
+                        :data-vv-name="field.field_name"
                         type="number"
                         required>
                     </v-text-field>
                     <v-btn fab dark small color="primary" style="width: 30px; height: 30px;"
-                    @click="deleteRisk(fld.id)"><v-icon dark>close</v-icon></v-btn>
+                    @click="deleteRisk(field.id)"><v-icon dark>close</v-icon></v-btn>
                 </template>
 
-                <template v-else-if="fld.field_type_id==2 && fld.enumerate==false">
+                <template v-else-if="field.field_type_id==2 && field.enumerate==false">
                     <v-text-field
-                        :label="fld.field_name"
-                        :data-vv-name="fld.field_name"
+                        :label="field.field_name"
+                        :data-vv-name="field.field_name"
                         required>
                     </v-text-field>
                     <v-btn fab dark small color="primary" style="width: 30px; height: 30px;"
-                    @click="deleteRisk(fld.id)"><v-icon dark>close</v-icon></v-btn>
+                    @click="deleteRisk(field.id)"><v-icon dark>close</v-icon></v-btn>
                 </template>
 
-                <template v-else-if="fld.field_type_id==3 && fld.enumerate==false">
+                <template v-else-if="field.field_type_id==3 && field.enumerate==false">
                     <v-checkbox
-                      :label="fld.field_name">
+                      :label="field.field_name">
                     </v-checkbox>
                     <v-btn fab dark small color="primary" style="width: 30px; height: 30px;"
-                    @click="deleteRisk(fld.id)"><v-icon dark>close</v-icon></v-btn>
+                    @click="deleteRisk(field.id)"><v-icon dark>close</v-icon></v-btn>
                 </template>
 
-                <template v-else-if="fld.field_type_id==4 && fld.enumerate==false">
+                <template v-else-if="field.field_type_id==4 && field.enumerate==false">
                     <v-menu
                         :close-on-content-click="false"
                         v-model="menu"
@@ -52,7 +52,7 @@
                         <v-text-field
                           slot="activator"
                           v-model="date"
-                          :label="fld.field_name"
+                          :label="field.field_name"
                           append-icon="event"
                           readonly>
                         </v-text-field>
@@ -60,18 +60,18 @@
                     </v-menu>
                     <v-spacer></v-spacer>
                     <v-btn fab dark small color="primary" style="width: 30px; height: 30px;"
-                    @click="deleteRisk(fld.id)"><v-icon dark>close</v-icon></v-btn>
+                    @click="deleteRisk(field.id)"><v-icon dark>close</v-icon></v-btn>
                 </template>
 
-                <template v-else-if="fld.enumerate==true">
+                <template v-else-if="field.enumerate==true">
                     <v-autocomplete
-                        :items="variants[fld.id]"
-                        :label="fld.field_name"
-                        :data-vv-name="fld.field_name"
+                        :items="variants[field.id]"
+                        :label="field.field_name"
+                        :data-vv-name="field.field_name"
                         required
                     ></v-autocomplete>
                     <v-btn fab dark small color="primary" style="width: 30px; height: 30px;"
-                    @click="deleteRisk(fld.id)"><v-icon dark>close</v-icon>
+                    @click="deleteRisk(field.id)"><v-icon dark>close</v-icon>
                     </v-btn>
                 </template>
 

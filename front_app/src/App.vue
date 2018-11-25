@@ -12,12 +12,7 @@
     </v-toolbar>
 
     <v-content>
-      <!--<v-layout>-->
         <router-view/>
-        <!--<RiskTypes/>-->
-        <!--<AddRiskType/>-->
-      <!--</v-layout>-->
-
     </v-content>
 
   <v-footer dark height="auto">
@@ -42,7 +37,6 @@ export default {
   },
   data () {
     return {
-      //
     }
   }
 }

@@ -3,7 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 
 
 class FieldTypes(models.Model):
-    # названия имеющихся типов поля, те текстовый и тд
+    # name of existed type of field such as text, number etc.
     type_name = models.CharField(max_length=60)
 
     def __str__(self):
@@ -11,7 +11,7 @@ class FieldTypes(models.Model):
 
 
 class RiskTypeList(models.Model):
-    # название типа риска, машина, дом и тд
+    # name of risk type such as car or house
     name = models.CharField(max_length=60)
 
     def __str__(self):
@@ -19,7 +19,7 @@ class RiskTypeList(models.Model):
 
 
 class Fields(models.Model):
-    # названия полей и к какому риску относиться
+    # name of fields and what risks refer
     field_name = models.CharField(max_length=60)
     risk_type_id = models.ForeignKey(RiskTypeList, related_name='fields', on_delete=models.CASCADE)
     field_type_id = models.ForeignKey(FieldTypes, on_delete=models.CASCADE)
@@ -31,6 +31,7 @@ class Fields(models.Model):
 
 
 class PolicyList(models.Model):
+    # list of policies
     name = models.CharField(max_length=60)
     risk_type_id = models.ForeignKey(RiskTypeList, on_delete=models.CASCADE)
     date = models.DateField()
@@ -40,6 +41,7 @@ class PolicyList(models.Model):
 
 
 class FieldValue(models.Model):
+    # list of fields with it value
     field_type = models.ForeignKey(Fields, on_delete=models.CASCADE)
     field_value = models.CharField(max_length=80)
 

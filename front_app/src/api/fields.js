@@ -3,7 +3,6 @@ import { HTTP } from './common'
 export const Field = {
     listFields(id) {
         return HTTP.get(`/risks/fields/${id}/`).then(response => {
-            // console.log('response', response.data)
             return response.data
         })
     },

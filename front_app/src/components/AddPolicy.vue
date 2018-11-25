@@ -38,12 +38,6 @@ export default {
                     }
                 })
                 this.$store.dispatch('createPolicy', { risk_type_id: risk_id })
-
-                // for (let i=0; i<this.risks.length; i++) {
-                //     if (this.risks[i] === this.current_risk) {
-                //         risk_id = this.risks[i]['id']
-                //     }
-                // }
             }
         }
     },

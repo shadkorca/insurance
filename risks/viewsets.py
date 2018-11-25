@@ -69,3 +69,13 @@ class PolicyViewSets(viewsets.ModelViewSet):
 class PolicyFieldsView(viewsets.ModelViewSet):
     queryset = FieldValue.objects.all()
     serializer_class = PolicyFieldsSerializer
+
+    def list(self, request, pk=None, sk=None):
+        if not sk:
+            queryset = FieldValue.objects.filter(field_type__risk_type_id=pk)
+            serializer = PolicyFieldsSerializer(queryset, many=True)
+            return Response(serializer.data)
+        else:
+            queryset = Fields.objects.filter(risk_type_id=pk).filter(id=sk)
+            serializer = FieldsSerializer(queryset, many=True)
+            return Response(serializer.data)

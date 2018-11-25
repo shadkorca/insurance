@@ -21,7 +21,6 @@
                 label="is_enumerated">
             </v-checkbox>
             <template v-if="checkbox==true">
-                <!--Add text to an input and press enter.-->
             <v-autocomplete
                 :items="enum_variant"
                 v-model="current_var"
@@ -74,15 +73,6 @@ export default {
         },
         submitForm() {
             if (this.$refs.form.validate()) {
-                // this.posts = Risk.create({ name: this.name })
-                // this.posts = Field.addField(this.id, {
-                //     field_name: this.name,
-                //     enumerate: this.checkbox,
-                //     enum_text: this.current_var,
-                //     risk_type_id: this.id,
-                //     field_type_id: this.field_types[this.current_type]
-                // })
-
                 this.$store.dispatch('createField', [{id: this.id}, {
                     field_name: this.name,
                     enumerate: this.checkbox,

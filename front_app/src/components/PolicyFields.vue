@@ -66,7 +66,6 @@
                 </template>
 
              </v-layout>
-            <v-btn>Save Policy</v-btn>
             </form>
         </v-flex>
       </v-flex>

@@ -1,7 +1,7 @@
 # coding=utf-8
 
-from .serializers import RiskTypesSerializer, PolicyListSerializer, FieldsSerializer, PolicyFieldsSerializer
-from .models import RiskTypeList, FieldTypes, Fields, PolicyList, FieldValue
+from .serializers import RiskTypesSerializer, PolicyListSerializer, FieldsSerializer
+from .models import RiskTypeList, FieldTypes, Fields, PolicyList
 from rest_framework.response import Response
 from rest_framework import status, viewsets
 import datetime
@@ -64,18 +64,3 @@ class PolicyViewSets(viewsets.ModelViewSet):
         if serializer.is_valid():
             serializer.save()
         return Response(serializer.data)
-
-
-class PolicyFieldsView(viewsets.ModelViewSet):
-    queryset = FieldValue.objects.all()
-    serializer_class = PolicyFieldsSerializer
-
-    def list(self, request, pk=None, sk=None):
-        if not sk:
-            queryset = FieldValue.objects.filter(field_type__risk_type_id=pk)
-            serializer = PolicyFieldsSerializer(queryset, many=True)
-            return Response(serializer.data)
-        else:
-            queryset = Fields.objects.filter(risk_type_id=pk).filter(id=sk)
-            serializer = FieldsSerializer(queryset, many=True)
-            return Response(serializer.data)

@@ -38,3 +38,11 @@ class PolicyList(models.Model):
 
     def __str__(self):
         return self.name
+
+class FieldValue(models.Model):
+    # list of fields with it value
+    field_type = models.ForeignKey(Fields, on_delete=models.CASCADE)
+    field_value = models.CharField(max_length=80)
+
+    def __str__(self):
+        return '%s %s' % (self.field_type.field_name,  self.field_value)

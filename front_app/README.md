@@ -1,26 +1,20 @@
-# front_app
+# Node.js
 
-## Project setup
 ```
-npm install
+npm install axios vue-axios --save
+npm install vuex --save
 ```
-
-### Compiles and hot-reloads for development
+for running the app
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+for build the app to
 ```
 npm run build
 ```
 
-### Run your tests
-```
-npm run test
-```
+# Start using
 
-### Lints and fixes files
-```
-npm run lint
-```
+To create policy for youself, you must go to the "Risk Types" tab and add your type of risk. Then, when type will be created, click on it to edit/create fields that you want to fill. After all go to "Policies" tab and choose type of risk. 
+This will create a new policy that you fill in with the data of a object of the insurance policy.

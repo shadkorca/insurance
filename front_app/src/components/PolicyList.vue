@@ -11,7 +11,7 @@
                 <v-flex>
                   <v-card>
                     <v-card-actions class="justify-center xs12">
-                      <v-btn flat class="justify" @click="submitForm(policy.risk_type_id)" style="width:70%;">{{ policy.name }}</v-btn>
+                      <v-btn flat class="justify" @click="submitForm(policy.id)" style="width:70%;">{{ policy.name }}</v-btn>
                       <v-spacer></v-spacer>
                       <v-btn fab dark small color="primary" style="width: 30px; height: 30px;"
                         @click="deletePolicy(policy)">

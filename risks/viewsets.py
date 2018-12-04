@@ -58,8 +58,9 @@ class PolicyViewSets(viewsets.ModelViewSet):
         if serializer.is_valid():
             serializer.save()
             field_qs = Fields.objects.filter(risk_type_id=serializer.data['risk_type_id'])
+            policie_qs = PolicyList.objects.get(id=serializer.data['id'])
             for i in field_qs:
-                FieldValue.objects.get_or_create(field_type=i)
+                FieldValue.objects.get_or_create(field_type=i, policie_id=policie_qs)
 
         return Response(serializer.data)
 
@@ -70,11 +71,7 @@ class PolicyFieldsView(viewsets.ModelViewSet):
 
     def list(self, request, pk=None, sk=None):
         if not sk:
-            queryset = FieldValue.objects.filter(field_type__risk_type_id=pk)
-            serializer = PolicyFieldsSerializer(queryset, many=True)
-            return Response(serializer.data)
-        else:
-            queryset = FieldValue.objects.filter(field_type__risk_type_id=pk).filter(id=sk)
+            queryset = FieldValue.objects.filter(policie_id=pk)
             serializer = PolicyFieldsSerializer(queryset, many=True)
             return Response(serializer.data)
 

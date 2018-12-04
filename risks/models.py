@@ -43,6 +43,7 @@ class FieldValue(models.Model):
     # list of fields with it value
     field_type = models.ForeignKey(Fields, on_delete=models.CASCADE)
     field_value = models.CharField(max_length=80)
+    policie_id = models.ForeignKey(PolicyList, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return '%s %s' % (self.field_type.field_name,  self.field_value)

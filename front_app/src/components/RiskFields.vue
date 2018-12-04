@@ -89,17 +89,6 @@ import { mapState } from 'vuex'
 export default {
     props: ['id'],
     computed: mapState(['fields']),
-    mounted: function () {
-        this.$store.dispatch('getFields', this.id)
-    },
-    updated() {
-        mapState(['fields']);
-        for (const [key, value] of Object.entries(this.fields)) {
-            if (value['enumerate'] === true) {
-                this.variants[value['id']]=value['enum_text'].split(this.join_str)
-            }
-        }
-    },
     data: () => ({
         date: new Date().toISOString().substr(0, 10),
         menu: false,
@@ -113,11 +102,24 @@ export default {
         variants: {},
         join_str: '#$'
     }),
-  methods: {
+    mounted: function () {
+        this.$store.dispatch('getFields', this.id)
+    },
+    watch: {
+        fields: function() {
+            mapState(['fields'])
+            for (const [key, value] of Object.entries(this.fields)) {
+                if (value['enumerate'] === true) {
+                    this.variants[value['id']] = value['enum_text'].split(this.join_str)
+                }
+            }
+        }
+    },
+    methods: {
       deleteRisk(field_id) {
           this.$store.dispatch('deleteField', [this.id, field_id])
       }
-  },
+    },
 
 }
 </script>

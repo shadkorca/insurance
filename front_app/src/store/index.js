@@ -5,7 +5,8 @@ import { Policy } from '../api/policies'
 import { Field } from "../api/fields"
 import { ADD_RISK, REMOVE_RISK, LIST_RISKS,
     ADD_POLICY, REMOVE_POLICY, LIST_POLICIES,
-    ADD_FIELD, REMOVE_FIELD, LIST_FIELDS
+    ADD_FIELD, REMOVE_FIELD, LIST_FIELDS,
+    LIST_POLICIE_FIELDS
 } from './mutation-types.js'
 
 Vue.use(Vuex)
@@ -14,6 +15,7 @@ const state = {
     risks: [],
     policies: [],
     fields: [],
+    policie_fields: []
 };
 
 
@@ -26,6 +28,9 @@ const getters = {
     },
     fields(state) {
         return state.fields
+    },
+    policie_fields(state) {
+        return state.policie_fields
     }
 };
 
@@ -64,6 +69,10 @@ const mutations = {
     },
     [LIST_FIELDS] (state, { fields }) {
         state.fields = fields
+    },
+
+    [LIST_POLICIE_FIELDS] (state, { policie_fields }) {
+        state.policie_fields = policie_fields
     }
 };
 
@@ -117,6 +126,12 @@ const actions = {
     getFields ({ commit }, risk_id) {
         Field.listFields(risk_id).then(fields => {
             commit(LIST_FIELDS, { fields })
+        })
+    },
+
+    getPoliciesFields ({ commit }, risk_id ) {
+        Field.listPoliciesFields(risk_id).then(policie_fields => {
+            commit(LIST_POLICIE_FIELDS, { policie_fields })
         })
     }
 };

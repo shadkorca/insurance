@@ -8,36 +8,42 @@
             <form ref="form" class="my-2" >
 
             <v-layout row wrap
-                v-for="field in fields"
-                :key="field.id">
-                <template v-if="field.field_type_id==1 && field.enumerate==false">
+                v-for="field in policie_fields"
+                :key="field.field_type.id">
+                <template v-if="field.field_type.field_type_id==1 && field.field_type.enumerate==false">
                     <v-text-field
-                        :label="field.field_name"
-                        :data-vv-name="field.field_name"
+                        :label="field.field_type.field_name"
+                        :data-vv-name="field.field_type.field_name"
+                        v-model="field.field_value"
                         type="number"
+                        @blur="onBlur(field)"
                         required>
                     </v-text-field>
                 </template>
 
-                <template v-else-if="field.field_type_id==2 && field.enumerate==false">
+                <template v-else-if="field.field_type.field_type_id==2 && field.field_type.enumerate==false">
                     <v-text-field
-                        :label="field.field_name"
-                        :data-vv-name="field.field_name"
+                        :label="field.field_type.field_name"
+                        :data-vv-name="field.field_type.field_name"
+                        v-model="field.field_value"
+                        @blur="onBlur(field)"
                         required>
                     </v-text-field>
                 </template>
 
-                <template v-else-if="field.field_type_id==3 && field.enumerate==false">
+                <template v-else-if="field.field_type.field_type_id==3 && field.field_type.enumerate==false">
                     <v-checkbox
-                      :label="field.field_name">
+                        :label="field.field_type.field_name"
+                        @change="onBlur(field)"
+                        v-model="field.field_value">
                     </v-checkbox>
                 </template>
 
-                <template v-else-if="field.field_type_id==4 && field.enumerate==false">
+                <template v-else-if="field.field_type.field_type_id==4 && field.field_type.enumerate==false">
                     <v-menu
                         :close-on-content-click="false"
-                        v-model="menu"
                         :nudge-right="40"
+                        v-model="menu"
                         lazy
                         transition="scale-transition"
                         offset-y
@@ -47,8 +53,9 @@
                         <v-text-field
                           slot="activator"
                           v-model="date"
-                          :label="field.field_name"
+                          :label="field.field_type.field_name"
                           append-icon="event"
+                          @blur="onBlur(field)"
                           readonly>
                         </v-text-field>
                         <v-date-picker v-model="date" @input="menu=false"></v-date-picker>
@@ -56,11 +63,13 @@
                     <v-spacer></v-spacer>
                 </template>
 
-                <template v-else-if="field.enumerate==true">
+                <template v-else-if="field.field_type.enumerate==true">
                     <v-autocomplete
-                        :items="variants[field.id]"
-                        :label="field.field_name"
-                        :data-vv-name="field.field_name"
+                        :items="variants[field.field_type.id]"
+                        :label="field.field_type.field_name"
+                        :data-vv-name="field.field_type.field_name"
+                        v-model="field.field_value"
+                        @blur="onBlur(field)"
                         required
                     ></v-autocomplete>
                 </template>
@@ -76,23 +85,14 @@
 
 <script>
 import { mapState } from 'vuex'
+import { Field } from "@/api/fields"
 
 export default {
     props: ['id'],
-    computed: mapState(['fields']),
-    mounted: function () {
-        this.$store.dispatch('getFields', this.id)
-    },
-    updated() {
-        mapState(['fields']);
-        for (const [key, value] of Object.entries(this.fields)) {
-                if (value['enumerate'] === true) {
-                    this.variants[value['id']]=value['enum_text'].split(this.join_str)
-                }
-            }
-    },
+    computed: mapState(['policie_fields']),
     data: () => ({
         date: new Date().toISOString().substr(0, 10),
+        current_variant: null,
         menu: false,
         risks: null,
         field_type : {
@@ -102,11 +102,27 @@ export default {
             '4': 'Date'
         },
         variants: {},
-        join_str: '#$',
+        join_str: '#$'
     }),
+    mounted: function () {
+        this.$store.dispatch('getPoliciesFields', this.id)
+    },
+    watch: {
+        policie_fields: function() {
+            mapState(['policie_fields'])
+            for (const [key, value] of Object.entries(this.policie_fields)) {
+                if (value['field_type']['enumerate'] === true) {
+                    this.variants[value['field_type']['id']] = value['field_type']['enum_text'].split(this.join_str)
+                    this.current_variant = this.variants['25'][0]
+                }
+            }
+        }
+    },
     methods: {
-        deleteRisk(field_id) {
-            this.$store.dispatch('deleteField', [this.id, field_id])
+        onBlur(field) {
+            let field_id = field['id']
+            let field_value = field['field_value'].toString()
+            Field.updateFieldValue(this.id, field_id, {field_value: field_value})
         }
     },
 }

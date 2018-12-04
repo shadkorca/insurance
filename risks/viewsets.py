@@ -41,12 +41,6 @@ class PolicyViewSets(viewsets.ModelViewSet):
     queryset = PolicyList.objects.all()
     serializer_class = PolicyListSerializer
 
-    def list(self, request):
-        queryset = PolicyList.objects.all()
-        serializer = PolicyListSerializer(queryset, many=True)
-
-        return Response(serializer.data)
-
     def create(self, request):
         if not request.POST._mutable:
             request.POST._mutable = True
@@ -63,6 +57,10 @@ class PolicyViewSets(viewsets.ModelViewSet):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            field_qs = Fields.objects.filter(risk_type_id=serializer.data['risk_type_id'])
+            for i in field_qs:
+                FieldValue.objects.get_or_create(field_type=i)
+
         return Response(serializer.data)
 
 
@@ -76,6 +74,13 @@ class PolicyFieldsView(viewsets.ModelViewSet):
             serializer = PolicyFieldsSerializer(queryset, many=True)
             return Response(serializer.data)
         else:
-            queryset = Fields.objects.filter(risk_type_id=pk).filter(id=sk)
-            serializer = FieldsSerializer(queryset, many=True)
+            queryset = FieldValue.objects.filter(field_type__risk_type_id=pk).filter(id=sk)
+            serializer = PolicyFieldsSerializer(queryset, many=True)
             return Response(serializer.data)
+
+    def partial_update(self, request, *args, **kwargs):
+        instance = self.queryset.get(id=kwargs.get('sk'))
+        serializer = self.serializer_class(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)

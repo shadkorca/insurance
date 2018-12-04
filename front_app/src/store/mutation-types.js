@@ -9,3 +9,6 @@ export const LIST_POLICIES = 'LIST_POLICIES'
 export const ADD_FIELD = 'ADD_FIELD'
 export const REMOVE_FIELD = 'REMOVE_FIELD'
 export const LIST_FIELDS = 'LIST_FIELDS'
+
+export const LIST_POLICIE_FIELDS = 'LIST_POLICIE_FIELDS'
+
